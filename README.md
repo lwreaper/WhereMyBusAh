@@ -1,3 +1,5 @@
+![icon](https://github.com/lwreaper/WhereMyBusAh/blob/master/app/src/main/res/mipmap-xhdpi/ic_launcher.png "Icon")
+
 # WhereMyBusAh
 For those Singaporeans always wanting to check bus arrivals!
 
