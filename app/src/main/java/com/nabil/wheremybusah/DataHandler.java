@@ -1,10 +1,15 @@
 package com.nabil.wheremybusah;
 
 import android.app.Activity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataHandler {
 
@@ -23,24 +28,29 @@ public class DataHandler {
 
     // Set the text (handling of all the views)
     public void setText() {
-        for (int i = 0; i < bus_data.length(); i++) {
-            String bus_no = "";
-            String timing_next = "";
-            String timing_next2 = "";
-            String timing_next3 = "";
+        ArrayList<String> list = new ArrayList<String>();
 
+        for (int i = 0; i < bus_data.length(); i++) {
             try {
+                String bus_no = "";
+                String timing_next = "";
+                String timing_next2 = "";
+                String timing_next3 = "";
+
                 bus_no = bus_data.getJSONObject(i).getString("no");
                 timing_next = handleTimings(bus_data.getJSONObject(i).getJSONObject("next").getInt("duration_ms"));
                 timing_next2 = handleTimings(bus_data.getJSONObject(i).getJSONObject("next2").getInt("duration_ms"));
                 timing_next3 = handleTimings(bus_data.getJSONObject(i).getJSONObject("next3").getInt("duration_ms"));
 
+                list.add(bus_no + timing_next + timing_next2 + timing_next3);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            // Append with the bus_no
-            ((TextView) (activity.findViewById(R.id.busStopInfo))).append(bus_no + " " + timing_next + " " + timing_next2 + " " + timing_next3 + "\n\n");
+            ArrayAdapter adapter = new ArrayAdapter<String>(activity.getApplicationContext(), R.layout.list_item_layout, list);
+            ListView listview = activity.findViewById(R.id.list_item);
+            listview.setAdapter(adapter);
         }
     }
 
