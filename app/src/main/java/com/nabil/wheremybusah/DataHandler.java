@@ -97,10 +97,6 @@ class ListAdapter extends BaseAdapter{
             ((ProgressBar) convertView.findViewById(R.id.next2_load)).setProgress(handleLoad(item.getJSONObject("next2").getString("load")));
             ((ProgressBar) convertView.findViewById(R.id.next3_load)).setProgress(handleLoad(item.getJSONObject("next3").getString("load")));
 
-            System.out.println(item.getString("no"));
-            System.out.println(handleTimings(item.getJSONObject("next").getInt("duration_ms")));
-            System.out.println(handleTimings(item.getJSONObject("next2").getInt("duration_ms")));
-            System.out.println(handleTimings(item.getJSONObject("next3").getInt("duration_ms")));
         }catch (JSONException e){
             e.printStackTrace();
         }

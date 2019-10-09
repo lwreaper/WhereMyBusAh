@@ -45,8 +45,5 @@ public class MainActivity extends AppCompatActivity {
                 i.fetchApi(busStopInput.getText().toString());
             }
         });
-
-        // DEBUG ONLY! (FOR SEARCHING FOR BUS STOP AUTOMATICALLY)
-        i.fetchApi("27369");
     }
 }
