@@ -126,7 +126,7 @@ class ListAdapter extends BaseAdapter{
         }else if(bus_load.equals("LSD")){
             return 100;
         }else{
-            return 100;
+            return 0;
         }
     }
 
