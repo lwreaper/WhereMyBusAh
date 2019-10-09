@@ -2,6 +2,7 @@ package com.nabil.wheremybusah;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,8 @@ public class BusApiHandlers {
         // After getting data
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
+            activity.findViewById(R.id.enter_bus_stop_code_text).setVisibility(View.INVISIBLE);
+            
             if(jsonArray != null && jsonArray.length() > 0){
                 Toast.makeText(activity.getApplicationContext(), "DONE!", Toast.LENGTH_SHORT).show();
 

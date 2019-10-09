@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     EditText busStopInput;
     ListView listView;
     Button button;
+    TextView enterBusStopCodeText;
     BusApiHandlers i = new BusApiHandlers(MainActivity.this);
 
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        enterBusStopCodeText = findViewById(R.id.enter_bus_stop_code_text);
         busStopInput = findViewById(R.id.busStopInput);
         button = findViewById(R.id.busStopButton);
         listView = findViewById(R.id.list_item);
