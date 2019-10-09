@@ -2,7 +2,7 @@
 For those Singaporeans always wanting to check bus arrivals!
 
 # Download
-**Head over to the releases section!**
+**Head over to the [releases](https://github.com/lwreaper/WhereMyBusAh/releases) section!**
 
 # Thanks to:
 [@cheeaun](https://github.com/cheeaun) - For providing us with your ArriveLah API! (So I don't need to keep my SECRET_KEY inside these files!)
