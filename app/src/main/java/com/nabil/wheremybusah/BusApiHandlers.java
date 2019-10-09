@@ -70,7 +70,7 @@ public class BusApiHandlers {
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             activity.findViewById(R.id.enter_bus_stop_code_text).setVisibility(View.INVISIBLE);
-            
+
             if(jsonArray != null && jsonArray.length() > 0){
                 Toast.makeText(activity.getApplicationContext(), "DONE!", Toast.LENGTH_SHORT).show();
 
