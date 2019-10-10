@@ -1,16 +1,26 @@
 package com.nabil.wheremybusah;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     EditText busStopInput;
     ListView listView;
-    Button button;
     SwipeRefreshLayout swipeRefreshLayout;
     BusApiHandlers i = new BusApiHandlers(MainActivity.this);
 
@@ -38,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         busStopInput = findViewById(R.id.busStopInput);
-        button = findViewById(R.id.busStopButton);
         listView = findViewById(R.id.list_item);
 
         swipeRefreshLayout = findViewById(R.id.pull_to_refresh);
@@ -50,11 +58,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        busStopInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View v) {
-                i.fetchApi(busStopInput.getText().toString());
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    i.fetchApi(busStopInput.getText().toString());
+
+                    hideKeyboard();
+                    return true;
+                }else{
+                    return false;
+
+                }
             }
         });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(getApplicationContext());
+        inflater.inflate(R.menu.main, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int item_id = item.getItemId();
+
+        if(item_id == R.id.wmba_action){
+            i.fetchApi(busStopInput.getText().toString());
+            hideKeyboard();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(busStopInput.getWindowToken(), 0);
     }
 }

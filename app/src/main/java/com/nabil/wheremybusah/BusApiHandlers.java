@@ -44,6 +44,11 @@ public class BusApiHandlers {
 
         JSONArray data = null;
 
+        @Override
+        protected void onPreExecute() {
+            Toast.makeText(activity.getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
+        }
+
         // Get the data!
         @Override
         protected JSONArray doInBackground(String... params) {
