@@ -7,8 +7,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     SwipeRefreshLayout swipeRefreshLayout;
     BusApiHandlers i = new BusApiHandlers(MainActivity.this);
-    ArrayList<String> recent_bus_stops = new ArrayList<String>();
+    Set<String> recent_bus_stops = new HashSet<String>();
     LinearLayout recent_bus_stop_list;
     LinearLayout MainActivity;
+    String PACKAGE_NAME = "com.nabil.wheremybusah";
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_item);
         recent_bus_stop_list = findViewById(R.id.recent_bus_stop_list);
         MainActivity = findViewById(R.id.MainActivity);
+        sharedPreferences = getSharedPreferences(PACKAGE_NAME, MODE_PRIVATE);
 
         swipeRefreshLayout = findViewById(R.id.pull_to_refresh);
 
@@ -124,11 +131,13 @@ public class MainActivity extends AppCompatActivity {
         if(!recent_bus_stops.contains(busStopInput.getText().toString())){
 
             // Save the string to an array;
-            recent_bus_stops.add(busStopInput.getText().toString());    
+            recent_bus_stops.add(busStopInput.getText().toString());
 
             // Initialise button and config!
             final Button button = new Button(getApplicationContext());
-            button.setText(recent_bus_stops.get(recent_bus_stops.size() - 1));
+
+            ArrayList<String> temp_list = new ArrayList<String>(recent_bus_stops);
+            button.setText(temp_list.get(temp_list.size() - 1));
             button.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
             button.setOnClickListener(new View.OnClickListener() {
@@ -139,9 +148,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            sharedPreferences.edit().putStringSet("recentBusStops", recent_bus_stops).apply();
+
             // Add the view
             recent_bus_stop_list.addView(button);
+
+
         }
+
+        // Log.i("LIST", sharedPreferences.getString("recentBusStops", ""));
 
         // Just hide the keyboard
         InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);

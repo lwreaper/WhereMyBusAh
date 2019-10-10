@@ -49,8 +49,6 @@ class ListAdapter extends BaseAdapter{
     public ListAdapter(Context _app_context, JSONArray _bus_data){
         this.bus_data = _bus_data;
         this.context = _app_context;
-
-        System.out.println(this.bus_data);
     }
 
     @Override
