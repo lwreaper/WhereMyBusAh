@@ -1,6 +1,7 @@
 package com.nabil.wheremybusah;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     EditText busStopInput;
     ListView listView;
     Button button;
+    SwipeRefreshLayout swipeRefreshLayout;
     BusApiHandlers i = new BusApiHandlers(MainActivity.this);
 
 
@@ -38,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         busStopInput = findViewById(R.id.busStopInput);
         button = findViewById(R.id.busStopButton);
         listView = findViewById(R.id.list_item);
+
+        swipeRefreshLayout = findViewById(R.id.pull_to_refresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                i.fetchApi(busStopInput.getText().toString());
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

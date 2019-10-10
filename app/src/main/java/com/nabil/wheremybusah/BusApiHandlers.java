@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,11 +44,6 @@ public class BusApiHandlers {
 
         JSONArray data = null;
 
-        @Override
-        protected void onPreExecute() {
-            activity.findViewById(R.id.progress_bar_loading_data).setVisibility(View.VISIBLE);
-        }
-
         // Get the data!
         @Override
         protected JSONArray doInBackground(String... params) {
@@ -75,7 +72,7 @@ public class BusApiHandlers {
         // After getting data
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            activity.findViewById(R.id.progress_bar_loading_data).setVisibility(View.INVISIBLE);
+            ((SwipeRefreshLayout) activity.findViewById(R.id.pull_to_refresh)).setRefreshing(false);
 
             if(jsonArray != null && jsonArray.length() > 0){
                 // DataHandler is a class which is self-explanatory, needs the activity to set the activity!
