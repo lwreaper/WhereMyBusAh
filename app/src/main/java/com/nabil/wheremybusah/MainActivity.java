@@ -4,37 +4,31 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.KeyListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     SwipeRefreshLayout swipeRefreshLayout;
     BusApiHandlers i = new BusApiHandlers(MainActivity.this);
-
+    ArrayList<String> recent_bus_stops = new ArrayList<String>();
+    LinearLayout recent_bus_stop_list;
+    LinearLayout MainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         busStopInput = findViewById(R.id.busStopInput);
         listView = findViewById(R.id.list_item);
+        recent_bus_stop_list = findViewById(R.id.recent_bus_stop_list);
+        MainActivity = findViewById(R.id.MainActivity);
 
         swipeRefreshLayout = findViewById(R.id.pull_to_refresh);
 
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     i.fetchApi(busStopInput.getText().toString());
 
-                    hideKeyboardAndUnfocus();
+                    after_click_handler();
                     return true;
                 }else{
                     return false;
@@ -98,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -115,14 +112,38 @@ public class MainActivity extends AppCompatActivity {
 
         if(item_id == R.id.wmba_action){
             i.fetchApi(busStopInput.getText().toString());
-            hideKeyboardAndUnfocus();
+            after_click_handler();
             return true;
         }else{
             return false;
         }
     }
 
-    public void hideKeyboardAndUnfocus(){
+    public void after_click_handler(){
+
+        if(!recent_bus_stops.contains(busStopInput.getText().toString())){
+
+            // Save the string to an array;
+            recent_bus_stops.add(busStopInput.getText().toString());    
+
+            // Initialise button and config!
+            final Button button = new Button(getApplicationContext());
+            button.setText(recent_bus_stops.get(recent_bus_stops.size() - 1));
+            button.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    busStopInput.setText(button.getText());
+                    i.fetchApi(busStopInput.getText().toString());
+                }
+            });
+
+            // Add the view
+            recent_bus_stop_list.addView(button);
+        }
+
+        // Just hide the keyboard
         InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(busStopInput.getWindowToken(), 0);
         busStopInput.clearFocus();
