@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.KeyListener;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +72,29 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     return false;
 
+                }
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                try{
+                    System.out.println();
+                    JSONObject item = i.getData().getJSONObject(position);
+                    String lat = item.getJSONObject("next").getString("lat");
+                    String lng = item.getJSONObject("next").getString("lng");
+
+                    if(!lat.equals("0") && !lng.equals("0")){
+                        Uri gmmIntentUri = Uri.parse("geo:"+lat+"," + lng +"?z=17&q=" +lat+","+lng);
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        startActivity(mapIntent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Unknown Location", Toast.LENGTH_SHORT).show();
+                    }
+                }catch(JSONException e){
+                    e.printStackTrace();
                 }
             }
         });

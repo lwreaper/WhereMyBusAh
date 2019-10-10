@@ -23,10 +23,11 @@ public class BusApiHandlers {
     // Variable for activity to access views in MainActivity
     Activity activity;
     DataHandler dataHandler;
+    JSONArray data = null;
+
 
     // Constructor
     public BusApiHandlers(Activity _activity) {
-
         // Pass the activity for the onPostExectute method!
         this.activity = _activity;
     }
@@ -39,11 +40,12 @@ public class BusApiHandlers {
         new FetchApi().execute(URL);
     }
 
+    public JSONArray getData() {
+        return data;
+    }
+
     // AsyncTask
     public class FetchApi extends AsyncTask<String, Void, JSONArray> {
-
-        JSONArray data = null;
-
         @Override
         protected void onPreExecute() {
             Toast.makeText(activity.getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
@@ -82,6 +84,7 @@ public class BusApiHandlers {
             if(jsonArray != null && jsonArray.length() > 0){
                 // DataHandler is a class which is self-explanatory, needs the activity to set the activity!
                 dataHandler = new DataHandler(activity, jsonArray);
+                data = jsonArray;
             }else if(jsonArray == null){
                 Toast.makeText(activity.getApplicationContext(), "Check your internet connection and try again later!", Toast.LENGTH_SHORT).show();
             }else if(jsonArray.length() == 0){
