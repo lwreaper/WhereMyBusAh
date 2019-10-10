@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     i.fetchApi(busStopInput.getText().toString());
 
-                    hideKeyboard();
+                    hideKeyboardAndUnfocus();
                     return true;
                 }else{
                     return false;
@@ -89,15 +89,16 @@ public class MainActivity extends AppCompatActivity {
 
         if(item_id == R.id.wmba_action){
             i.fetchApi(busStopInput.getText().toString());
-            hideKeyboard();
+            hideKeyboardAndUnfocus();
             return true;
         }else{
             return false;
         }
     }
 
-    public void hideKeyboard(){
+    public void hideKeyboardAndUnfocus(){
         InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(busStopInput.getWindowToken(), 0);
+        busStopInput.clearFocus();
     }
 }
