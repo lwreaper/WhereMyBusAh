@@ -42,6 +42,11 @@ public class BusApiHandlers {
 
         JSONArray data = null;
 
+        @Override
+        protected void onPreExecute() {
+            activity.findViewById(R.id.progress_bar_loading_data).setVisibility(View.VISIBLE);
+        }
+
         // Get the data!
         @Override
         protected JSONArray doInBackground(String... params) {
@@ -56,6 +61,7 @@ public class BusApiHandlers {
             try {
                 Response res = client.newCall(req).execute();
                 data = new JSONObject(res.body().string()).getJSONArray("services");
+                res.close();
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
@@ -69,15 +75,17 @@ public class BusApiHandlers {
         // After getting data
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            activity.findViewById(R.id.enter_bus_stop_code_text).setVisibility(View.INVISIBLE);
+            activity.findViewById(R.id.progress_bar_loading_data).setVisibility(View.INVISIBLE);
 
             if(jsonArray != null && jsonArray.length() > 0){
-                Toast.makeText(activity.getApplicationContext(), "DONE!", Toast.LENGTH_SHORT).show();
-
                 // DataHandler is a class which is self-explanatory, needs the activity to set the activity!
                 dataHandler = new DataHandler(activity, jsonArray);
+            }else if(jsonArray == null){
+                Toast.makeText(activity.getApplicationContext(), "Check your internet connection and try again later!", Toast.LENGTH_SHORT).show();
+            }else if(jsonArray.length() == 0){
+                Toast.makeText(activity.getApplicationContext(), "Please enter a valid bus-stop code!", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(activity.getApplicationContext(), "CHECK INTERNET CONNECTION OR WRONG BUS STOP NUMBER!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity.getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
             }
 
         }

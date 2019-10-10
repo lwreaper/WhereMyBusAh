@@ -46,7 +46,6 @@
             android:text="Double" />
 
         <ProgressBar
-            android:scaleY="2"
             android:progressTint="@color/colorAccent"
             android:id="@+id/next_load"
             android:progress="100"
@@ -81,7 +80,6 @@
             android:text="Single" />
 
         <ProgressBar
-            android:scaleY="2"
             android:progressTint="@color/colorAccent"
             android:id="@+id/next2_load"
             android:progress="100"
@@ -116,7 +114,6 @@
             android:text="Double" />
 
         <ProgressBar
-            android:scaleY="2"
             android:progressTint="@color/colorAccent"
             android:id="@+id/next3_load"
             android:progress="100"
