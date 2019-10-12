@@ -10,6 +10,8 @@ public class DisplayTiming extends AppCompatActivity {
 
     ListView listView;
     SwipeRefreshLayout swipeRefreshLayout;
+    String busStopCode = null;
+    String busStopName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +20,20 @@ public class DisplayTiming extends AppCompatActivity {
 
         listView = findViewById(R.id.list_item);
         swipeRefreshLayout = findViewById(R.id.pull_to_refresh);
-        final String busStopCode = getIntent().getStringExtra("busStopCode");
-        final String busStopName = getIntent().getStringExtra("busStopName");
+        busStopCode = getIntent().getStringExtra("busStopCode");
+        busStopName = getIntent().getStringExtra("busStopName");
 
+        executeCall();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                executeCall();
+            }
+        });
+    }
+
+    public void executeCall(){
         if(busStopName != null){
             new FetchTimingsByName(this, busStopName).execute();
         }else{

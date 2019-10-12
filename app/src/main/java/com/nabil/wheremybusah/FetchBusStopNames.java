@@ -22,6 +22,7 @@ public class FetchBusStopNames extends AsyncTask<Void, Void, JSONArray> {
 
     Activity activity;
     List<String> all_bus_stop_names = new ArrayList<String>();
+    List<String> temp_object = new ArrayList<>();
 
     public FetchBusStopNames(Activity _activity){
         this.activity = _activity;
@@ -52,13 +53,31 @@ public class FetchBusStopNames extends AsyncTask<Void, Void, JSONArray> {
         if(jsonArray != null){
             for(int i = 0; i < jsonArray.length(); i++){
                 try{
+                    temp_object.add(jsonArray.getString(i));
                     all_bus_stop_names.add(jsonArray.getString(i));
                 }catch(JSONException e){
                     e.printStackTrace();
                 }
             }
 
-            ((ListView) activity.findViewById(R.id.listView_busStopNames)).setAdapter(new ArrayAdapter<String>(activity.getApplicationContext(), R.layout.list_bus_stop_names, all_bus_stop_names));
+            setAdapter();
         }
+    }
+
+    public void setAdapter(){
+        ArrayAdapter adapter = new ArrayAdapter<String>(activity.getApplicationContext(), R.layout.list_bus_stop_names, all_bus_stop_names);
+        ((ListView) activity.findViewById(R.id.listView_busStopNames)).setAdapter(adapter);
+    }
+
+    public void setAll_bus_stop_names(List<String> all_bus_stop_names) {
+        this.all_bus_stop_names = all_bus_stop_names;
+    }
+
+    public List<String> getAll_bus_stop_names() {
+        return all_bus_stop_names;
+    }
+
+    public List<String> getTemp_object() {
+        return temp_object;
     }
 }
