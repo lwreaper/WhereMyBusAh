@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="bus_stop_name" parent="TextAppearance.AppCompat">
+        <item name="android:color">@color/color_black</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>

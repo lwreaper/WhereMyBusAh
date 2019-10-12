@@ -1,9 +1,8 @@
 package com.nabil.wheremybusah;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,16 +13,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FetchBusStops extends AsyncTask<Void, Void, JSONObject> {
+public class FetchBusStopNames extends AsyncTask<Void, Void, JSONObject> {
 
-    String busStopNumber;
-    String TAG = this.getClass().getSimpleName();
-    JSONObject busStopInfo;
-    Activity application;
+    String busStopName;
+    Activity activity;
 
-    public FetchBusStops(Activity application, String busStopNumber){
-        this.busStopNumber = busStopNumber;
-        this.application = application;
+    public FetchBusStopNames(Activity _activity, String busStopName){
+        this.busStopName = busStopName;
+        this.activity = _activity;
     }
 
     @Override
@@ -33,13 +30,13 @@ public class FetchBusStops extends AsyncTask<Void, Void, JSONObject> {
 
         OkHttpClient client = new OkHttpClient();
         Request req = new Request.Builder()
-                .url("https://raw.githubusercontent.com/cheeaun/busrouter-sg/master/data/3/stops.json")
+                .url("https://raw.githubusercontent.com/nabilcreates/BusService/master/data/json_name_code.json")
                 .build();
 
         try{
             Response res = client.newCall(req).execute();
             result = new JSONObject(res.body().string());
-        }catch (JSONException | IOException e){
+        }catch(JSONException | IOException e){
             e.printStackTrace();
         }
 
@@ -50,13 +47,13 @@ public class FetchBusStops extends AsyncTask<Void, Void, JSONObject> {
     protected void onPostExecute(JSONObject jsonObject) {
         if(jsonObject != null){
             try{
-                this.busStopInfo = jsonObject.getJSONObject(this.busStopNumber);
+                String bus_stop_code = jsonObject.getString(busStopName);
+                Intent i = new Intent(activity.getApplicationContext(), DisplayTiming.class);
+                i.putExtra("busStopCode", bus_stop_code);
+                activity.startActivity(i);
             }catch(JSONException e){
                 e.printStackTrace();
             }
-        }else{
-            Log.e(TAG, "ERROR FETCHING BUS STOPS");
         }
     }
-
 }
