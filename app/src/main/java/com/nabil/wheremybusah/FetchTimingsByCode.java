@@ -17,12 +17,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FetchTimings extends AsyncTask<Void, Void, JSONArray> {
+public class FetchTimingsByCode extends AsyncTask<Void, Void, JSONArray> {
 
     Activity activity;
     String url;
 
-    public FetchTimings(Activity _activity, String bus_stop_code){
+    public FetchTimingsByCode(Activity _activity, String bus_stop_code){
         this.activity = _activity;
         this.url = "https://arrivelah.herokuapp.com/?id=" + bus_stop_code;
     }
