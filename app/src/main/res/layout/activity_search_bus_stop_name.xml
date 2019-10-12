@@ -16,12 +16,6 @@
         android:inputType="text"
         android:hint="Bus Stop Name" />
 
-    <Button
-        android:id="@+id/busStopNameButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search!" />
-
     <ListView
         android:id="@+id/listView_busStopNames"
         android:layout_width="match_parent"

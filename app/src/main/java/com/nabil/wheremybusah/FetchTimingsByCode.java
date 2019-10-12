@@ -2,7 +2,9 @@ package com.nabil.wheremybusah;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -27,6 +29,10 @@ public class FetchTimingsByCode extends AsyncTask<Void, Void, JSONArray> {
         this.url = "https://arrivelah.herokuapp.com/?id=" + bus_stop_code;
     }
 
+    @Override
+    protected void onPreExecute() {
+        ((ProgressBar) activity.findViewById(R.id.progressBar)).setVisibility(View.VISIBLE);
+    }
 
     // Get the data!
     @Override
@@ -59,6 +65,7 @@ public class FetchTimingsByCode extends AsyncTask<Void, Void, JSONArray> {
             TimingAdapter adapter = new TimingAdapter(activity, jsonArray);
             ((SwipeRefreshLayout) activity.findViewById(R.id.pull_to_refresh)).setRefreshing(false);
             ((ListView) activity.findViewById(R.id.listView)).setAdapter(adapter);
+            ((ProgressBar) activity.findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
 
         }else if(jsonArray == null){
             Toast.makeText(activity.getApplicationContext(), "Check your internet connection and try again later!", Toast.LENGTH_SHORT).show();
