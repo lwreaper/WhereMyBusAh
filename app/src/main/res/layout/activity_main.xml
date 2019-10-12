@@ -43,6 +43,11 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+    <TextView
+        android:id="@+id/bus_stop_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
