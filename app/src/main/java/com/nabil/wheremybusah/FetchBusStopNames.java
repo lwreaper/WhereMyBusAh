@@ -11,8 +11,6 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,7 +20,7 @@ public class FetchBusStopNames extends AsyncTask<Void, Void, JSONArray> {
 
     Activity activity;
     List<String> all_bus_stop_names = new ArrayList<String>();
-    List<String> temp_object = new ArrayList<>();
+    List<String> original_state_object = new ArrayList<>();
 
     public FetchBusStopNames(Activity _activity){
         this.activity = _activity;
@@ -53,7 +51,7 @@ public class FetchBusStopNames extends AsyncTask<Void, Void, JSONArray> {
         if(jsonArray != null){
             for(int i = 0; i < jsonArray.length(); i++){
                 try{
-                    temp_object.add(jsonArray.getString(i));
+                    original_state_object.add(jsonArray.getString(i));
                     all_bus_stop_names.add(jsonArray.getString(i));
                 }catch(JSONException e){
                     e.printStackTrace();
@@ -77,7 +75,7 @@ public class FetchBusStopNames extends AsyncTask<Void, Void, JSONArray> {
         return all_bus_stop_names;
     }
 
-    public List<String> getTemp_object() {
-        return temp_object;
+    public List<String> getOriginal_state_object() {
+        return original_state_object;
     }
 }

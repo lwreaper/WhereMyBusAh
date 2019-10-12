@@ -47,7 +47,7 @@ public class WMBA extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                fetchBusStopNames_init.setAll_bus_stop_names(fetchBusStopNames_init.getTemp_object());
+                fetchBusStopNames_init.setAll_bus_stop_names(fetchBusStopNames_init.getOriginal_state_object());
 
                 fetchBusStopNames_init.setAll_bus_stop_names(
                         fetchBusStopNames_init.getAll_bus_stop_names().stream()
