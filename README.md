@@ -1,5 +1,9 @@
 ![icon](https://github.com/lwreaper/WhereMyBusAh/blob/master/app/src/main/res/mipmap-xhdpi/ic_launcher.png "Icon")
 
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/nabilcreates/wheremybusah)
+![GitHub tag (latest SemVer pre-release)](https://img.shields.io/github/v/tag/nabilcreates/wheremybusah?include_prereleases)
+![GitHub All Releases](https://img.shields.io/github/downloads/nabilcreates/wheremybusah/total)
+
 # WhereMyBusAh
 For those Singaporeans always wanting to check bus arrivals!
 
