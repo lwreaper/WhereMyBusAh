@@ -3,6 +3,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/nabilcreates/wheremybusah)
 ![GitHub tag (latest SemVer pre-release)](https://img.shields.io/github/v/tag/nabilcreates/wheremybusah?include_prereleases)
 ![GitHub All Releases](https://img.shields.io/github/downloads/nabilcreates/wheremybusah/total)
+![GitHub](https://img.shields.io/github/license/nabilcreates/wheremybusah)
 
 # WhereMyBusAh
 For those Singaporeans always wanting to check bus arrivals!
